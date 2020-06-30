@@ -5,6 +5,7 @@ import sys
 from pygame.locals import *
 import matplotlib.pyplot as plt
 
+#function to pick a color for lines
 def getRandomColor(i = -55):
 	colors = [
 	(0,255,0),
@@ -18,22 +19,27 @@ def getRandomColor(i = -55):
 	else:
 		return colors[int(np.mod(i, len(colors)))]
 
-
+#The curve class
 class Curve:
 	def __init__(self, points):
+		#initialise the control points
 		self.controls_points = points
+		#set all arrays to 0
 		self.animation_points= []
 		self.Curve_points = []
 		self.FinalPoints = []
 
 	def draw_Control_Points(self):
+		#Only draw the white control points
 		global Screen
 		for p in self.controls_points:
 			pygame.draw.circle(Screen, (255,255,255), p, 5)
 		for l in range(len(self.controls_points) - 1):
 			pygame.draw.line(Screen, (255,255,255), self.controls_points[l], self.controls_points[l+1], 2)
 
+	#this function can draw a bezier Curve with 3 or 4 control points
 	def draw_animation_points(self, t):
+		#Do the animation
 		global lerp
 		self.animation_points = []
 		for l in range(len(self.controls_points) - 1):
@@ -60,11 +66,12 @@ class Curve:
 		else:
 			self.FinalPoints = self.animation_points[:]
 
+	#this function can draw a bezier Curve with any number of control points
 	def draw_animation_points2(self, t):
 		#set the size of animations iteration
 		self.animation_points = [0] * (len(self.controls_points))
 		self.animation_points[0] = self.controls_points[:]
-		#loop
+		#loop for each iteration
 		for iteration in range(len(self.controls_points)-1):
 			self.animation_points[iteration + 1] = []
 			for l in range(len(self.animation_points[iteration]) - 1):
@@ -89,19 +96,21 @@ class Curve:
 
 
 	def Draw(self, t):
+		#Juste a function to call every other function
 		self.draw_Control_Points()
 		self.draw_animation_points2(t)
 		self.draw_curve(t)
 
 pygame.init()
 
+#set the screen 
 ScreenSize = (800,800)
 Screen = pygame.display.set_mode(ScreenSize)
 
 def lerp(a, b, t):
 	return (a + (t * (b-a)))
 
-
+#Set the position of the control points in the screen (0 > Screen.W, 0 > Screen.H)
 points = [(0,250), (240,0), (350,156), (450,450), (500,368), (600,0),(800,250),(750,650),(600,758)]
 
 curve = Curve(points)
@@ -112,15 +121,17 @@ actualFrame = 0
 
 waitingFrame = 200
 
-print(len(curve.controls_points))
-
+#The game loop
 IsActive = True
 while IsActive == True:
+	#fill the screen with a black background
 	Screen.fill((0,0,0))
+	#get the quit event
 	for event in pygame.event.get():
 		if event.type == QUIT:
 			pygame.quit()
 			sys.exit()
+	#Run the animation
 	if TotaFrame > actualFrame:
 		ti = actualFrame / TotaFrame
 		actualFrame += 1
@@ -131,4 +142,5 @@ while IsActive == True:
 		if actualFrame > (TotaFrame + waitingFrame):
 			actualFrame = 0
 			curve = Curve(points)
+	#Update the screen 
 	pygame.display.update()
