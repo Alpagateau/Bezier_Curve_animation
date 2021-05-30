@@ -1,3 +1,4 @@
+
 import numpy as np
 from numpy import random as rng
 import pygame
@@ -9,6 +10,7 @@ class Canvas:
 		self.w, self.h = size
 		self.Screen = Screen
 		self.elements = []
+		
 
 	def addElement(self, element):
 		self.elements += [element]
@@ -25,18 +27,26 @@ class Canvas:
 class viewPort:
 	def __init__(self, ObjectToDraw):
 		self.drawObj = ObjectToDraw
+		self.Clicked = False
 
 	def Draw(self, Screen):
 		if self.drawObj.isPlaying == True:
 			self.drawObj.Use()
 
+	def getClicked(self,point):
+		return pygame.Rect(0,0,800,800).collidepoint(point)
+
 class Panel:
 	def __init__(self, PosAndDim, color):
 		self.pad = PosAndDim
 		self.c = color
+		self.Clicked = False
 
 	def Draw(self, Screen):
 		pygame.draw.rect(Screen, self.c, self.pad)
+	
+	def getClicked(self,point):
+		return pygame.Rect(self.pad).collidepoint(point)
 
 class Button:
 	def __init__(self, Pos, color, title, textColor, fontSize):
@@ -53,8 +63,6 @@ class Button:
 
 	def Draw(self, Screen):
 		Screen.blit(self.text, self.textRect)
-		if self.Clicked == True:
-			print("CLICKED !!!")
-
+		
 	def getClicked(self,point):
 		return self.textRect.collidepoint(point)

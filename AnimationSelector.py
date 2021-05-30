@@ -12,9 +12,13 @@ class Selector:
 		self.isPlaying = False
 		self.frame = 0
 		self.MaxFrame = 0
+		self.waitframe = 1000
 
+	def Restart(self):
+		self.curentAnim.reset()
+	
 	def Use(self):
-		if self.frame == self.MaxFrame:
+		if self.frame == self.MaxFrame+self.waitframe:
 			self.isPlaying = False
 			self.curentAnim.Reset()
 			self.frame = 0
@@ -22,4 +26,7 @@ class Selector:
 		if self.frame < self.MaxFrame:
 			self.frame += 1
 			self.curentAnim.Draw((self.frame / self.MaxFrame))
+		elif self.frame < self.MaxFrame+self.waitframe:
+			self.frame += 1
+			self.curentAnim.Draw(1)
 

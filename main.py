@@ -24,10 +24,12 @@ selector.MaxFrame = 2500
 canvas = UI.Canvas(ScreenSize, Screen)
 canvas.addElement(UI.viewPort(selector))
 canvas.addElement(UI.Panel((0,700,800,100),(164,154,155)))
-canvas.addElement(UI.Button((400,750), (255,0,255), "Play", (255,255,255), 25))
+canvas.addElement(UI.Button((400,750), (255,64,70), "Play", (255,255,255), 25))
+canvas.addElement(UI.Button((400,780), (255,64,70), "Set Points", (255,255,255), 25))
 
 
 x = 0
+PlacePoints = False
 #The game loop
 IsActive = True
 while IsActive == True:
@@ -38,9 +40,21 @@ while IsActive == True:
 		if event.type == QUIT:
 			pygame.quit()
 			sys.exit()
+		if pygame.mouse.get_pressed()[0]:
+			if PlacePoints == True:
+				if canvas.elements[2].Clicked == False:
+					points += [pygame.mouse.get_pos()]
+		canvas.Update()
+		
 	#Run the animation
 	canvas.Update()
 	if canvas.elements[2].Clicked == True:
 		selector.isPlaying = True
+		PlacePoints = False
+		selector.curentAnim.controls_points = points
+	if canvas.elements[3].Clicked == True:
+		print("Place Points")
+		PlacePoints = True
 	#Update the screen 
+	
 	pygame.display.update()
