@@ -20,9 +20,9 @@ class Curve:
 	def draw_Control_Points(self):
 		#Only draw the white control points
 		for p in self.controls_points:
-			pygame.draw.circle(self.Screen, (255,255,255), p, 5)
+			pygame.draw.circle(self.Screen, (0,0,0), p, 5)
 		for l in range(len(self.controls_points) - 1):
-			pygame.draw.line(self.Screen, (255,255,255), self.controls_points[l], self.controls_points[l+1], 2)
+			pygame.draw.line(self.Screen, (0,0,0), self.controls_points[l], self.controls_points[l+1], 2)
 
 	#this function can draw a bezier Curve with 3 or 4 control points. It is not used
 	def draw_animation_points(self, t):
@@ -78,7 +78,7 @@ class Curve:
 		self.Curve_points += [(x,y)]
 
 		for i in range(len(self.Curve_points) - 1):
-			pygame.draw.line(self.Screen, (0,0,255), self.Curve_points[i], self.Curve_points[i+1], 5)
+			pygame.draw.line(self.Screen, (0,0,0), self.Curve_points[i], self.Curve_points[i+1], 5)
 
 	def Draw(self, t):
 		#Juste a function to call every other function

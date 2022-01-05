@@ -16,7 +16,7 @@ Screen = pygame.display.set_mode(ScreenSize)
 pygame.display.set_caption('Bezier Curve Animation') 
 
 #Set the position of the control points in the screen (0 > Screen.W, 0 > Screen.H)
-points = [(400,0),(800,0),(800,350),(800,700),(400,700),(0,700),(0,350),(0,0),(400,0 )]
+points = [(200,200), (300,300), (400,200), (500, 300), (600,200)]
 selector = AnimationSelector.Selector(Screen, BA.Curve(points, Screen))
 #selector.isPlaying = True
 selector.MaxFrame = 2500
@@ -34,7 +34,7 @@ PlacePoints = False
 IsActive = True
 while IsActive == True:
 	#fill the screen with a black background
-	Screen.fill((0,0,0))
+	Screen.fill((255,255,255))
 	#get the quit event
 	for event in pygame.event.get():
 		if event.type == QUIT:
