@@ -44,6 +44,7 @@ while IsActive == True:
 			if PlacePoints == True:
 				if canvas.elements[2].Clicked == False:
 					points += [pygame.mouse.get_pos()]
+					print("--------------Point making--------------")
 		canvas.Update()
 		
 	#Run the animation
