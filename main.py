@@ -17,7 +17,8 @@ pygame.display.set_caption('Bezier Curve Animation')
 
 #Set the position of the control points in the screen (0 > Screen.W, 0 > Screen.H)
 points = [(200,200), (300,300), (400,200), (500, 300), (600,200)]
-selector = AnimationSelector.Selector(Screen, BA.Curve(points, Screen))
+curve = BA.Curve(points, Screen)
+selector = AnimationSelector.Selector(Screen, curve)
 #selector.isPlaying = True
 selector.MaxFrame = 2500
 
@@ -37,15 +38,16 @@ while IsActive == True:
 	Screen.fill((255,255,255))
 	#get the quit event
 	for event in pygame.event.get():
+		canvas.Update()
 		if event.type == QUIT:
 			pygame.quit()
 			sys.exit()
 		if pygame.mouse.get_pressed()[0]:
 			if PlacePoints == True:
-				if canvas.elements[2].Clicked == False:
+				if canvas.elements[2].Clicked == False and canvas.elements[1].Clicked == False:
 					points += [pygame.mouse.get_pos()]
 					print("--------------Point making--------------")
-		canvas.Update()
+		
 		
 	#Run the animation
 	canvas.Update()
@@ -53,9 +55,13 @@ while IsActive == True:
 		selector.isPlaying = True
 		PlacePoints = False
 		selector.curentAnim.controls_points = points
+	
 	if canvas.elements[3].Clicked == True:
 		print("Place Points")
 		PlacePoints = True
+
+	if selector.isPlaying == False:
+		selector.curentAnim.draw_Control_Points()
 	#Update the screen 
 	
 	pygame.display.update()

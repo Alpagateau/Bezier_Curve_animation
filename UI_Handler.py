@@ -51,11 +51,17 @@ class Panel:
 		pygame.draw.rect(Screen, self.c, self.pad)
 	
 	def getClicked(self,point):
-		return pygame.Rect(self.pad).collidepoint(point)
+		c = pygame.Rect(self.pad).collidepoint(point)
+		if c:
+			self.c = (0,255,0)
+		else:
+			self.c = (100,100,100)
+		return c
 	
 	def getPosAndDim(self):
 		x,y,w,h = self.pad
 		return [x,y,w,h]
+
 class Button:
 	def __init__(self, Pos, color, title, textColor, fontSize, hovercolor=(0,255,0)):
 		self.Pos = Pos
