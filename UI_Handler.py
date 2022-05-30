@@ -52,10 +52,6 @@ class Panel:
 	
 	def getClicked(self,point):
 		c = pygame.Rect(self.pad).collidepoint(point)
-		if c:
-			self.c = (0,255,0)
-		else:
-			self.c = (100,100,100)
 		return c
 	
 	def getPosAndDim(self):

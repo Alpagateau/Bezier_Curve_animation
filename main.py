@@ -46,7 +46,6 @@ while IsActive == True:
 			if PlacePoints == True:
 				if canvas.elements[2].Clicked == False and canvas.elements[1].Clicked == False:
 					points += [pygame.mouse.get_pos()]
-					print("--------------Point making--------------")
 		
 		
 	#Run the animation
@@ -57,7 +56,6 @@ while IsActive == True:
 		selector.curentAnim.controls_points = points
 	
 	if canvas.elements[3].Clicked == True:
-		print("Place Points")
 		PlacePoints = True
 
 	if selector.isPlaying == False:

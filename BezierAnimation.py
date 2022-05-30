@@ -3,6 +3,7 @@ from numpy import random as rng
 import pygame
 import sys
 from pygame.locals import *
+import pygame.gfxdraw
 import AnimationSelector
 import Maths as m
 
@@ -22,7 +23,7 @@ class Curve:
 		for p in self.controls_points:
 			pygame.draw.circle(self.Screen, (0,0,0), p, 5)
 		for l in range(len(self.controls_points) - 1):
-			pygame.draw.line(self.Screen, (0,0,0), self.controls_points[l], self.controls_points[l+1], 2)
+			pygame.draw.line(self.Screen, (0,0,0), self.controls_points[l], self.controls_points[l+1], 1)
 
 	#this function can draw a bezier Curve with 3 or 4 control points. It is not used
 	def draw_animation_points(self, t):
@@ -36,7 +37,7 @@ class Curve:
 			self.animation_points += [(o,h)]
 			pygame.draw.circle(self.Screen, (0,255,10), [o,h], 5)
 		for l in range(len(self.animation_points) - 1):
-			pygame.draw.line(self.Screen, (0,255,0), self.animation_points[l], self.animation_points[l+1], 2)
+			pygame.draw.line(self.Screen, (0,255,0), self.animation_points[l], self.animation_points[l+1], 1)
 		if(len(self.animation_points) > 2):
 			secondary = []
 			for l in range(len(self.animation_points) - 1):
@@ -47,7 +48,7 @@ class Curve:
 				secondary += [(o,h)]
 				pygame.draw.circle(self.Screen, (255,0,240), [o,h], 5)
 			for l in range(len(secondary) - 1):
-				pygame.draw.line(self.Screen, (255,0,210), secondary[l], secondary[l+1], 2)
+				pygame.draw.line(self.Screen, (255,0,210), secondary[l], secondary[l+1], 1)
 			self.FinalPoints = secondary[:]
 		else:
 			self.FinalPoints = self.animation_points[:]
@@ -63,13 +64,13 @@ class Curve:
 			for l in range(len(self.animation_points[iteration]) - 1):
 				x,y = self.animation_points[iteration][l]
 				j,k = self.animation_points[iteration][l+1]
-				o = int(m.lerp(x, j, t))
-				h = int(m.lerp(y, k, t))
+				o = m.lerp(x, j, t)
+				h = m.lerp(y, k, t)
 				self.animation_points[iteration + 1] += [(o,h)]
-				pygame.draw.circle(self.Screen, m.getRandomColor(iteration), [o,h], 5)
+				pygame.draw.circle(self.Screen, m.getRandomColor(iteration), [int(o),int(h)], 5)
 				self.FinalPoints = (o,h)
 			for l in range(len(self.animation_points[iteration + 1]) - 1):
-				pygame.draw.line(self.Screen, m.getRandomColor(iteration), self.animation_points[iteration+1][l], self.animation_points[iteration+1][l+1], 2)
+				pygame.draw.line(self.Screen, m.getRandomColor(iteration), m.intArr(self.animation_points[iteration+1][l]), m.intArr(self.animation_points[iteration+1][l+1]), 1)
 
 	def draw_curve(self, t):
 		global lerp
@@ -78,7 +79,7 @@ class Curve:
 		self.Curve_points += [(x,y)]
 
 		for i in range(len(self.Curve_points) - 1):
-			pygame.draw.line(self.Screen, (0,0,0), self.Curve_points[i], self.Curve_points[i+1], 5)
+			pygame.draw.line(self.Screen, (0,0,0), self.Curve_points[i], self.Curve_points[i+1], 2)
 
 	def Draw(self, t):
 		#Juste a function to call every other function

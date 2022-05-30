@@ -16,3 +16,9 @@ def getRandomColor(i = -55):
 		return colors[rng.randint(0,len(colors))]
 	else:
 		return colors[int(np.mod(i, len(colors)))]
+
+def intArr(a):
+	b = []
+	for i in a:
+		b += [int(i)]
+	return b
