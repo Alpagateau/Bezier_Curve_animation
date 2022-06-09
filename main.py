@@ -10,10 +10,10 @@ import UI_Handler as UI
 
 pygame.init()
 
-#set the screen 
+#set the screen
 ScreenSize = (800,800)
 Screen = pygame.display.set_mode(ScreenSize)
-pygame.display.set_caption('Bezier Curve Animation') 
+pygame.display.set_caption('Bezier Curve Animation')
 
 #Set the position of the control points in the screen (0 > Screen.W, 0 > Screen.H)
 points = []
@@ -46,20 +46,19 @@ while IsActive == True:
 			if PlacePoints == True:
 				if canvas.elements[2].Clicked == False and canvas.elements[1].Clicked == False:
 					points += [pygame.mouse.get_pos()]
-		
-		
+
 	#Run the animation
 	canvas.Update()
 	if canvas.elements[2].Clicked == True:
 		selector.isPlaying = True
 		PlacePoints = False
 		selector.curentAnim.controls_points = points
-	
+
 	if canvas.elements[3].Clicked == True:
 		PlacePoints = True
 
 	if selector.isPlaying == False:
 		selector.curentAnim.draw_Control_Points()
 	#Update the screen 
-	
+
 	pygame.display.update()
